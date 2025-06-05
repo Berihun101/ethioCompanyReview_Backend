@@ -6,6 +6,7 @@ services:
     startCommand: "gunicorn ethio_company_review_backend.wsgi:application --worker-tmp-dir /dev/shm"
     envVars:
       - key: DATABASE_URL
+        value: "postgresql://postgres:Bridalmask%40224@db.prnuazowgehevmvvowfe.supabase.co:5432/postgres?sslmode=require"
         fromDatabase:
           name: ethio-company-review-db
           property: connectionString
@@ -16,6 +17,6 @@ services:
       - key: JWT_SIGNING_KEY
         generateValue: true
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://yourfrontend.com,http://localhost:3000"  # Replace with your actual frontend URL
+        value: "https://yourfrontend.com,http://localhost:3000" 
       - key: ALLOWED_HOSTS
-        value: ".onrender.com,your-custom-domain.com"  # Add your Render URL (*.onrender.com)
+        value: ".onrender.com,your-custom-domain.com" 
