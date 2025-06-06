@@ -145,7 +145,14 @@ WSGI_APPLICATION = 'ethio_company_review_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.prnuazowgehevmvvowfe',
+        'PASSWORD': 'Bridalmask@224',
+        'HOST': 'aws-0-us-east-2.pooler.supabase.com',
+        'PORT': '6543',
+    }
 }
 
 
