@@ -1,6 +1,7 @@
 from django.db import models
 from category.models import Category
 from django.db.models import Avg
+from cloudinary.models import CloudinaryField
 
 # Create your models here.
 
@@ -14,7 +15,7 @@ class Company(models.Model):
     phone = models.CharField(max_length=100)
     email = models.EmailField()
     website = models.URLField()
-    logo = models.ImageField(upload_to='company_logo')
+    logo = CloudinaryField('logo', folder='company_logos')
 
     def __str__(self):
         return self.name
