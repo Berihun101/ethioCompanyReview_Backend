@@ -9,5 +9,6 @@ django-allauth==0.58.2
 dj_database_url==3.0.0
 Pillow==11.2.1            # Only if using images
 gunicorn==21.2.0          # For production
+psycopg2-binary
 whitenoise==6.6.0         # For static files
 django-cors-headers==4.3.1 # For CORS
