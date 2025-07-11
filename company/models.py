@@ -15,7 +15,7 @@ class Company(models.Model):
     phone = models.CharField(max_length=100)
     email = models.EmailField()
     website = models.URLField()
-    logo = CloudinaryField('logo', folder='company_logos')
+    logo = CloudinaryField('logo', folder='company_logo')
 
     def __str__(self):
         return self.name

@@ -14,7 +14,8 @@ from django.db.models import Avg
 @permission_classes([])
 @authentication_classes([])
 def category_company(request,name):
-    category = Category.objects.get(name=name)
+    decode_name = unquote(name)
+    category = Category.objects.get(name=decode_name)
     print(category)
 
     if category:
@@ -49,7 +50,7 @@ def get_best_rated_banks(request):
     best_rated_companies = (
         Company.objects.filter(category=1)
         .annotate(avg_rating=Avg('review__rating')) 
-        .order_by('-avg_rating')[:5]
+        .order_by('avg_rating')[:5]
     )
     serializer = CompanySerializer(best_rated_companies, many=True)
     return JsonResponse(serializer.data, safe=False)
@@ -62,7 +63,7 @@ def get_best_rated_hospitals(request):
     best_rated_companies = (
         Company.objects.filter(category=3)
         .annotate(avg_rating=Avg('review__rating')) 
-        .order_by('-avg_rating')[:5]
+        .order_by('avg_rating')[:5]
     )
     serializer = CompanySerializer(best_rated_companies, many=True)
     return JsonResponse(serializer.data, safe=False)
