@@ -3,9 +3,14 @@ from .models import User
 from dj_rest_auth.registration.serializers import RegisterSerializer
 
 class UserDetailSerializer(serializers.ModelSerializer):
+    avatar_url = serializers.SerializerMethodField()
+    
     class Meta:
         model = User
-        fields = ('id', 'username', 'avatar')
+        fields = ['id', 'email', 'username', 'avatar_url', 'date_joined']
+    
+    def get_avatar_url(self, obj):
+        return obj.avatar_url()
 
 class CustomRegisterSerializer(RegisterSerializer):
     username = serializers.CharField(required=True)
