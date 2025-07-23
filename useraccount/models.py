@@ -46,6 +46,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    provider = models.CharField(max_length=50, blank=True)
+    social_id = models.CharField(max_length=200, blank=True)
 
     objects = CustomUserManager()
 
@@ -63,3 +65,14 @@ class User(AbstractBaseUser, PermissionsMixin):
             return self.avatar.url
         # Return default avatar URL if none exists
         return 'https://res.cloudinary.com/dia0j0tge/image/upload/v1749234171/default_afubcj.png'
+    
+    @staticmethod
+    def create_social_user(provider, social_id, email, username='', first_name='', last_name=''):
+        user = User.objects.create(
+            email=email,
+            username=username or email.split('@')[0],
+            provider=provider,
+            social_id=social_id,
+            is_active=True
+        )
+        return user

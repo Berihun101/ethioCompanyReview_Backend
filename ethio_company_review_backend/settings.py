@@ -63,6 +63,8 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -102,11 +104,16 @@ INSTALLED_APPS = [
 
     'cloudinary',
     'cloudinary_storage',
+    
 
     'django.contrib.sites',  # Make sure 'sites' is included
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'oauth2_provider',
+    'social_django',
+    'rest_framework_social_oauth2',
     'dj_rest_auth',
     'dj_rest_auth.registration',
 
@@ -132,6 +139,17 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'ethio_company_review_backend.urls'
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+GOOGLE_OAUTH_CLIENT_ID = os.getenv('GOOGLE_OAUTH_CLIENT_ID')
+GOOGLE_OAUTH_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH_CLIENT_SECRET')
+GOOGLE_OAUTH2_SCOPE = ['email', 'profile']
+GOOGLE_OAUTH2_EXTRA_DATA = ['first_name', 'last_name']
+
 
 TEMPLATES = [
     {
