@@ -1,12 +1,21 @@
 services:
   - type: web
     name: ethio-company-review
+    plan: free  # Explicitly declare (free tier has 512MB RAM)
     runtime: python
     buildCommand: "./build.sh"
-    startCommand: "gunicorn ethio_company_review_backend.wsgi:application --worker-tmp-dir /dev/shm"
+    startCommand: >
+      gunicorn ethio_company_review_backend.wsgi:application 
+      --workers 1 
+      --timeout 120 
+      --worker-class gthread 
+      --threads 2 
+      --worker-tmp-dir /dev/shm 
+      --max-requests 50  # Lower for memory-bound apps
+      --max-requests-jitter 10
+      --log-level warning
     envVars:
       - key: DATABASE_URL
-        value: "postgresql://postgres:Bridalmask%40224@db.prnuazowgehevmvvowfe.supabase.co:5432/postgres?sslmode=require"
         fromDatabase:
           name: ethio-company-review-db
           property: connectionString
@@ -17,6 +26,8 @@ services:
       - key: JWT_SIGNING_KEY
         generateValue: true
       - key: CORS_ALLOWED_ORIGINS
-        value: "*" 
+        value: "ethio-company-review-6rigqm53y-berihun101s-projects.vercel.app,http://localhost:3000"
       - key: ALLOWED_HOSTS
-        value: ".onrender.com,your-custom-domain.com" 
+        value: "ethio-company-review.onrender.com,yourdomain.com"
+      - key: PYTHONUNBUFFERED  # Critical for logging
+        value: "True"
