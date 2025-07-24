@@ -1,0 +1,18 @@
+# Database
+*.sqlite3
+*.db
+*.sql
+*.sqlite
+
+# Media
+media/
+uploads/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Python
+__pycache__/
+*.py[cod]
